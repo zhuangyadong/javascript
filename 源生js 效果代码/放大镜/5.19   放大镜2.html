@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>放大镜2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<!--<link rel="stylesheet" href="reset.css">-->
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		background: #ccc; padding-top: 20px;
+	}
+	#out{
+		width: 1200px;
+		overflow: hidden;
+		background: #fff;
+		margin:0 auto;
+		padding: 10px;
+		position: relative;
+	}
+	#minbox{
+		width: 350px;
+		height: 350px;
+		float: left;
+		background: #ccc;
+		position: relative;
+		border: 1px solid green;
+		cursor: move;
+	}
+	#minbox img{
+		width: 350px;
+		height: 350px;
+		float: left;
+	}
+	#minbox p{
+		width: 175px;
+		height: 175px;
+		background: yellow;
+		opacity: 0.4; filter: alpha(opacity=40);
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: none;
+	}
+	#maxbox{
+		width: 400px;
+		height: 400px;
+		border: 1px solid red;
+		position: absolute;
+		top: 10px;
+		left: 375px;
+		overflow: hidden;
+		display: none;
+	}
+	#maxbox img{
+		width: 800px;
+		height: 800px;
+		/*position: absolute; left: 0; top: 0;*/}
+	#con{
+		float: left;
+		margin-left: 20px;
+	}
+	#con img{
+		width: 550px;
+		height: 520px;
+	}
+</style>
+</head>
+<body>
+	<div id="out">
+		<div id="minbox">
+			<img src="images/s71.jpg" alt="">
+			<p></p>
+		</div>
+		<div id="maxbox">
+			<img src="images/s72.jpg" alt="">
+		</div>
+		<div id="con">
+			<img src="images/caidan.png" alt="">
+		</div>
+	</div>
+</body>
+<script>
+	//获取对象到body的offsetLeft或offsetTop
+	function offsetTL(obj){
+		var l=0,t=0;
+		while(obj) {
+			l=l+obj.offsetLeft+obj.clientLeft;
+			t=t+obj.offsetTop+obj.clientTop;
+			obj=obj.offsetParent;
+		}
+		return {left:l,top:t};
+	}
+	var minbox=document.getElementById('minbox');
+	var minImg=minbox.children[0];
+	var mask=minbox.children[1];
+	var maxbox=document.getElementById('maxbox');
+	var maxImg=maxbox.children[0];
+	minbox.onmousemove=function (ev){
+		mask.style.display='block';
+		maxbox.style.display='block';
+		var e=ev||window.event;
+		var maskT=e.clientY-offsetTL(minbox).top-mask.offsetHeight/2;
+		var maskL=e.clientX-offsetTL(minbox).left-mask.offsetWidth/2;
+		var posL=minbox.clientWidth-mask.offsetWidth;
+		var posT=minbox.clientHeight-mask.offsetHeight;
+		if (maskT>=posT) {
+			maskT=posT;//最多值
+		} else if(maskT<=0) {
+			maskT=0;//最小值
+		};
+		if (maskL>=posL) {
+			maskL=posL;//最多值
+		} else if(maskL<=0) {
+			maskL=0;//最小值
+		};
+		mask.style.top=maskT+'px';
+		mask.style.left=maskL+'px';
+
+		var scale=maxImg.offsetWidth/minImg.offsetWidth;
+		// maxImg.style.top=-maskT*scale+'px';
+		// maxImg.style.left=-maskL*scale+'px';
+		maxbox.scrollLeft=maskL*scale;
+		maxbox.scrollTop=maskT*scale;
+	}
+	minbox.onmouseout=function (){
+		mask.style.display='none';
+		maxbox.style.display='none';
+	}
+</script>
+</html>

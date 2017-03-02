@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>测试</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<style type="text/css">
+#wrap{
+	width: 1220px;
+	margin:20px auto 0;
+}
+h1{
+	font-size: 40px;
+	text-align: center;
+}
+#con img{
+	width: 590px;
+	height: 350px;
+	margin:5px;
+	/* display: none; */
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<h1>图片展示</h1>
+	<div id="con">
+		<img abc="../images/001.jpg" alt="">
+		<img abc="../images/002.jpg" alt="">
+		<img abc="../images/003.jpg" alt="">
+		<img abc="../images/004.jpg" alt="">
+		<img abc="../images/005.jpg" alt="">
+		<img abc="../images/006.jpg" alt="">
+		<img abc="../images/007.jpg" alt="">
+		<img abc="../images/008.jpg" alt="">
+		<img abc="../images/009.jpg" alt="">
+		<img abc="../images/010.jpg" alt="">
+		<img abc="../images/011.jpg" alt="">
+		<img abc="../images/012.jpg" alt="">
+		<img abc="../images/013.jpg" alt="">
+		<img abc="../images/014.jpg" alt="">
+		<img abc="../images/015.jpg" alt="">
+		<img abc="../images/016.jpg" alt="">
+		<img abc="../images/017.jpg" alt="">
+		<img abc="../images/018.jpg" alt="">
+		<img abc="../images/019.jpg" alt="">
+		<img abc="../images/020.jpg" alt="">
+		<img abc="../images/021.jpg" alt="">
+	</div>
+</div>
+<script type="text/javascript">
+function offsetTL(obj){
+	var t=0,l=0;
+	while(obj){
+		t=t+obj.offsetTop+obj.clientTop;
+		l=l+obj.offsetLeft+obj.clientLeft;
+		obj=obj.offsetParent;
+	}
+	return {top:t,left:l};
+}
+var con=document.getElementById('con');
+var imgs=con.children;
+window.onload=window.onscroll=function (){
+	var scrollT=document.body.scrollTop||document.documentElement.scrollTop;
+	var winH=document.documentElement.clientHeight;
+	for (var i = 0; i < imgs.length; i++) {
+		if (offsetTL(imgs[i]).top<scrollT+winH) {
+			imgs[i].src=imgs[i].getAttribute('abc');
+		};
+	};
+}
+</script>
+</body>
+</html>

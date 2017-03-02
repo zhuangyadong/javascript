@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #out{
+            overflow: hidden;
+        }
+        h2,p,strong,em,h3,span,var{
+            float: left;
+            font-size: 30px;
+            background: #ccc;
+            margin:0 10px ;
+        }
+    </style>
+</head>
+<body>
+<div id="out">
+    <h2>h2标签</h2>
+    <p>p</p>
+    <span>span</span>
+    <var>var</var>
+    <em>em</em>
+    <strong>strong</strong>
+    <h3>h3</h3>
+    <h2>h2标签</h2>
+    <p>p</p>
+    <span>span</span>
+    <var>var</var>
+    <em>em</em>
+    <strong>strong</strong>
+    <h3>h3</h3>
+</div>
+</body>
+<script>
+    var out=document.getElementById('out');
+    var tags=out.children;
+//    for(var i= 0;i<tags.length;i++){
+//        tags[i].onclick=function(){
+//            this.style.background='pink';
+//        }
+//    }
+    out.onclick=function(ev){
+        var e=ev||window.event;
+        var target= e.target|| e.srcElement;
+        target.style.background='yellow';
+    }
+</script>
+</html>

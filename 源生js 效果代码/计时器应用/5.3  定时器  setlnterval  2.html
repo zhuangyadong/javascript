@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        button{
+            width: 200px;
+            height: 35px;
+            font-size: 20px;
+        }
+        div{
+            width: 200px;
+            height: 200px;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
+            background-color: rgba(255, 125, 179, 0.34);
+        }
+    </style>
+</head>
+<body>
+<button>产生随机数</button>
+<div></div>
+<script>
+    var btn = document.getElementsByName('button')[0];
+    var div = document.getElementsByName('div')[0];
+    btn.onclick = function(){
+        //3.使用innerHTML显示数据在div中
+        var num = parseInt(Math.random()*100);
+            num = num % 24;
+        div.innerHTML = arr[num];
+    }
+</script>
+</body>
+</html>

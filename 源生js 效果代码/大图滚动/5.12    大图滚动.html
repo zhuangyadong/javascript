@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #wrap{
+            width: 400px;
+            height: 300px;
+            margin: 20px auto 0;
+            position: relative;
+        }
+        #con{
+            width: 400px;
+            height: 320px;
+            border: 1px solid;
+            margin: 20px auto;
+            overflow: hidden;
+            /*超出隐藏*/
+            overflow-x:scroll;
+        }
+        #box{
+            width: 5000px;
+            height: 300px;
+            overflow: hidden;
+            /*清除浮动*/
+        }
+        #box img{
+            width: 400px;
+            height: 300px;
+            float: left;
+        }
+        #num{
+            position: absolute;
+            left: 100px;
+            bottom: 5px;
+
+        }
+        #num li{
+            float: left;
+            height: 20px;
+            width: 20px;
+            background: rgba(23, 23, 23, 0.43);
+            line-height: 20px;
+            text-align: center;
+            margin: 0 4px;
+            list-style-type: none;
+            cursor: pointer;
+            /*悬浮小手*/
+        }
+        #left{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 0;
+            top: 130px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: rgba(23, 23, 23, 0.43);
+        }
+        #right{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 0;
+            top: 130px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: rgba(23, 23, 23, 0.43);
+        }
+        /*当前显示样式*/
+        #num .show{
+            background-color: #080809;
+            color: #ffffff;
+            font-size: 16px;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="con">
+            <div id="box">
+                <img src="../img/wuyue3.jpeg" alt=""/>
+                <img src="../img/wuyue1.jpg" alt=""/>
+                <img src="../img/wuyue2.jpg" alt=""/>
+                <img src="../img/tao2.jpg" alt=""/>
+                <img src="../img/wuyue4.jpg" alt=""/>
+            </div>
+            <ul id="num">
+                <li class="show">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+            <p id="left">&lt;</p>
+            <p id="right">&gt;</p>
+        </div>
+    </div>
+</body>
+<script>
+    var con=document.getElementById('con');
+    var box=document.getElementById('box');
+    var num=document.getElementById('num');
+    var left=document.getElementById('left');
+    var right=document.getElementById('right');
+    var imgs=box.children;//获取每张图片的索引
+    var lis=num.children;//获取每个数字的索引
+    var a= 0,//控制图片及数字的索引值
+        time1=null,
+            time2=null;
+    //1.自动走
+    function zidong(){
+    time1 = setInterval(function(){
+        a++;
+        if(a>=imgs.length){//临界值判断
+            a=0;
+        }
+        var start=con.scrollLeft;//运动起点
+        var end=imgs[0].clientWidth*a;//运动终点
+        var change=end-start;//变化量
+        var stepmin=0;//起始步数
+        var stepmax=20;//最多步数
+        var everystep=change/stepmax;//每步所走的距离
+        time2=setInterval(function(){//运动过程
+            stepmin++;
+            if(stepmin>=stepmax){
+                clearInterval(time2);
+            }
+            start+=everystep;//起始位置变化
+            con.scrollLeft=start;//滚动条变化
+        },20);
+        for(var i=0;i<lis.length;i++){
+            lis[i].className='';
+        }
+        lis[a].className='show';
+    },2400);}
+    zidong();//进入页面自动执行
+    //2.点击右按钮
+    right.onclick = function(){
+        clearInterval(time1);
+        clearInterval(time2);
+        a++;
+        if(a>=imgs.length){//临界值判断
+            a=0;
+        }
+        var start=con.scrollLeft;//运动起点
+        var end=imgs[0].clientWidth*a;//运动终点
+        var change=end-start;//变化量
+        var stepmin=0;//起始步数
+        var stepmax=20;//最多步数
+        var everystep=change/stepmax;//每步所走的距离
+        clearInterval(time2);
+        time2=setInterval(function(){//运动过程
+            stepmin++;
+            if(stepmin>=stepmax){
+                clearInterval(time1);
+            }
+            start+=everystep;//起始位置变化
+            con.scrollLeft=start;//滚动条变化
+        },20);
+        for(var i=0;i<lis.length;i++){
+            lis[i].className='';
+        }
+        lis[a].className='show';
+        zidong();//控制结束之后，图片回到自动状态
+    };
+    //2.点击左按钮
+    right.onclick = function(){
+        clearInterval(time1);
+        clearInterval(time2);
+        a--;
+        if(a<0){//临界值判断
+            a=imgs.length-1;
+        }
+        var start=con.scrollLeft;//运动起点
+        var end=imgs[0].clientWidth*a;//运动终点
+        var change=end-start;//变化量
+        var stepmin=0;//起始步数
+        var stepmax=20;//最多步数
+        var everystep=change/stepmax;//每步所走的距离
+        time2=setInterval(function(){//运动过程
+            stepmin++;
+            if(stepmin>=stepmax){
+                clearInterval(time2);
+            }
+            start+=everystep;//起始位置变化
+            con.scrollLeft=start;//滚动条变化
+        },20);
+        for(var i=0;i<lis.length;i++){
+            lis[i].className='';
+        }
+        lis[a].className='show';
+        zidong();//控制结束之后，图片回到自动状态
+    };
+    //4.点击事件
+    for(var i=0; i<lis.length;i++){
+        lis[i].onclick=function(){
+            for(var i=0;i<lis.length;i++){
+
+            }
+        }
+    }
+    //5.封装公用代码
+    function Move(){
+
+    }
+</script>
+</html>

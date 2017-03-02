@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #wrap{
+            width: 1020px;
+            height: 620px;
+            border: 1px solid;
+            margin: 20px auto 0;
+            position: relative;
+        }
+        #box1{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .box2{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            position: absolute;
+            left: 350px;
+            top: 320px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="box1"></div>
+    <p class="box2"></p>
+</div>
+</body>
+<script>
+    var wrap=document.getElementById('wrap');
+    var box1=document.getElementById('box');
+
+    var time=null;
+    var s=false,x=false,z=false,y=true;
+    function Test(){
+        var l1=box1.offsetLeft;
+        var r1=
+    }
+    time=setInterval(function(){
+        if(s){
+            box1.style.top=box1.offsetTop-2+'px';
+        }
+        if(x){
+            box1.style.top=box1.offsetTop+2+'px';
+        }
+        if(z){
+            box1.style.top=box1.offsetLeft-2+'px';
+        }
+        if(y){
+            box1.style.top=box1.offsetLeft+2+'px';
+        }
+    },20)
+    document.onKeydown=function(ev){
+        var e=ev||window.event;
+        switch(e.keyCode){
+            case 37:
+                z=true;
+                y=false;
+                s=false;
+                x=false;
+                break;
+            case 38:
+                z=false;
+                y=false;
+                s=true;
+                x=false;
+                break;
+            case 39:
+                z=false;
+                y=true;
+                s=false;
+                x=false;
+                break;
+            case 37:
+                z=false;
+                y=false;
+                s=false;
+                x=true;
+                break;
+        }
+    }
+</script>
+</html>

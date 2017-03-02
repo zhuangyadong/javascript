@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        button {width: 50px;
+                height: 50px;
+                font-size: 25px;
+                float: left;
+                margin: 222px 20px 0 20px;
+        }
+        .outter {
+                width: 1000px;
+                height: 310px;
+                overflow: hidden;
+                overflow-x: scroll;
+                margin: 100px auto;
+                float: left;
+        }
+        .inner {
+                width: 2000px;
+                height: 310px;
+        }
+        .inner img {
+                width: 200px;
+                height: 310px;
+                float: left;}
+    </style>
+</head>
+<body>
+<button>&lt;</button>
+<div class="outter" id="outter">
+    <div class="inner" id="inner">
+        <img src="img/gun1.png" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue1.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue2.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue3.jpeg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue4.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/gun1.png" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue1.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue2.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue3.jpeg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue4.jpg" alt="图片名" title="鼠标悬浮"/>
+    </div>
+</div>
+<button>&gt;</button>
+<!--间歇滚动-滚动到某个阶段停一会再滚动-->
+<script>
+    var outter = document.getElementById("outter");
+    var inner = document.getElementById("inner");
+    var btns = document.getElementsByTagName("button");
+    //保证定时器可以被清除
+    var timer = null;
+    var timeout = null;
+    var moveDirection = 1;//滚动方向,最开始是1
+    //优化代码,1,2,3,4,5写一次就可以,通过innerHTML拷贝另一份,来节省代码,拷贝之前innnerHTML代码
+    inner.innerHTML += inner.innerHTML;
+    //向左滚动
+    function autoScrollLeft(){
+        outter.scrollLeft += 1; //向左滚动
+        if(outter.scrollLeft == inner.clientWidth/2) {//如果滚动到最大的距离,则从头开始
+            outter.scrollLeft = 0;//滚回去0
+        }
+        //滚到200,400,600...停一会(清除定时器)
+        if(outter.scrollLeft % 1000 == 0) {
+            clearInterval(timer);
+            clearTimeout(timeout);
+            //1秒之后再开启timer,自动滚
+            timeout =  setTimeout("scrollX(1)",2000);
+        }
+    }
+    //向右滚动,scrollLeft -= 1
+    function autoScrollRight() {
+        outter.scrollLeft -= 1; //向右滚动
+        if(outter.scrollLeft == 0) {//如果滚动到初始位置,滚不动了,让他滚到最左边
+            outter.scrollLeft = inner.clientWidth/2;//滚到最左边
+        }
+        //滚到200,400,600...停一会(清除定时器)
+        if(outter.scrollLeft % 1000 == 0) {
+            clearInterval(timer);
+            //1秒之后再开启timer,自动滚
+            timeout =  setTimeout("scrollX(0)",1000);
+        }
+    }
+    //继续滚动函数,左右都可以,n=1左滚动,0右滚动
+    function scrollX(n) {
+        if(n==1) {//向左滚动
+            timer = setInterval(autoScrollLeft,1);
+        }
+        else {//向右滚动
+            timer = setInterval(autoScrollRight,1);
+        }
+    }
+    //添加点击事件
+    btns[0].onclick = function () {
+        //向左滚动(首先清除向右的定时器)
+        changeDirection(1);
+    }
+    btns[1].onclick = function () {
+        //向右滚动(停掉左边的一切定时器)
+        changeDirection(0);
+    }
+    //改变滚动方向,1代表左边,0代表右边
+    function changeDirection(n) {
+        clearInterval(timer);
+        clearTimeout(timeout);
+        scrollX(n);//向左/右移动
+        moveDirection = n; //记录滚动方向
+    }
+    //鼠标悬浮事件
+    outter.onmouseover = function () {
+        clearInterval(timer);
+        clearTimeout(timeout);
+    }
+    //鼠标移出去,继续之前的方向移动
+    outter.onmouseout = function () {
+        //向我们记录的方向移动
+        scrollX(moveDirection);
+    }
+    //最开始向左滚动
+    scrollX(1);
+</script>
+</body>
+</html>

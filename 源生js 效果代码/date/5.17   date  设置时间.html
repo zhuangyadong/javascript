@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #time{
+            color: #080809;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="time">
+</div>
+
+<script>
+//    var set=new Date("2016/6/1,00:00:00");
+//    var Now=new Date();
+//    var time1=set.getTime();//1970.1.1.早上八点到2016.6.1的总毫秒
+//    var time2=Now.getTime();
+//    var time3=time-time2;
+//
+//    var hao=Now.getMilliseconds();//毫秒
+//    var miao=Now.getSeconds();//秒
+//    var
+////    console.log(set);
+////    console.log(Now);
+//    time3=setInterval(function(){
+//
+//    },1000)
+    var set=new Date("2016/6/1,00:00:00");
+    var settime=set.getTime();
+    var Now=new Date();
+    var nowtime=Now.getTime();
+    var alltime=settime-nowtime;//当前到2016.6.1的总毫秒数
+    var days=parseInt(alltime/(1000*60*60*24));
+    var reat1=alltime%(1000*60*60*24);//减掉天数剩余的毫秒数
+    var hours=parseInt(reat1/(1000*60*60));
+    var reat2=reat1%(1000*60*60);//减掉天数和小时数剩余的毫秒数
+    var
+    alert(days);
+</script>
+</body>
+</html>

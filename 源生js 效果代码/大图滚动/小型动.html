@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/reset.css"/>
+    <style>
+        #wrap {
+            width: 386px;
+            height: 272px;
+            margin: 20px auto 0;
+            position: relative;
+            border: 1px solid red;
+        }
+        #con {
+            width: 386px;
+            height: 272px;
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+        #box {
+            width: 5000px;
+            background-color: #176FBB;
+            overflow: hidden;
+        }
+        #box img {
+            width: 386px;
+            height: 272px;
+            float: left;
+        }
+        #num {
+            position: absolute;
+            bottom: 3px;
+            right: 0;
+        }
+        #num li {
+            float: left;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            background-color: #ccc;
+            color: green;
+            margin: 0 4px;
+            cursor: pointer;
+            border-radius: 40px;
+            /*text-decoration: none;*/
+            list-style: none;
+        }
+        #left {
+            width: 35px;
+            height: 35px;
+            background: rgba(0,0,0,.5);
+            position: absolute;
+            left: 0;
+            top: 120px;
+            cursor: pointer;
+            background-size: 35px;
+            opacity: 0.6;
+            color: #fff;
+        }
+        #right {
+            width: 35px;
+            height: 35px;
+            background: rgba(0,0,0,.5);
+            position: absolute;
+            right: 0;
+            top: 120px;
+            cursor: pointer;
+            background-size: 35px;
+            opacity: 0.6;
+            color: #fff;
+        }
+        #num .show {
+            background-color: green;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="con">
+        <div id="box">
+            <img src="img/meinv1.jpg" alt=""/>
+            <img src="img/meinv2.jpg" alt=""/>
+            <img src="img/meinv3.jpg" alt=""/>
+            <img src="img/meinv4.jpg" alt=""/>
+            <img src="img/meinv5.jpg" alt=""/>
+        </div>
+        <ul id="num">
+            <li class="show">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <p id="left"><</p>
+        <p id="right">></p>
+    </div>
+</div>
+
+</body>
+
+<script>
+    var con = document.getElementById('con');
+    var box = document.getElementById('box');
+    var num = document.getElementById('num');
+    var left = document.getElementById('left');
+    var right = document.getElementById('right');
+    var imgs = box.children;
+    var lis = num.children;
+    var a = 0,//数值的一个索引值
+            b = 1,//图片的索引值
+            time1 = null,
+            time2 = null;
+    var firstImg = imgs[0].cloneNode(true);//创建一个新的第一张的图片
+    var lastImg = imgs[imgs.length-1].cloneNode(true);    //创建一个新的最后一张的图片
+    box.appendChild(firstImg);//在最后插入第一张图片
+    box.insertBefore(lastImg,imgs[0]);//在最前面插入最后一张图片
+    con.scrollLeft = imgs[0].clientWidth;
+    //滚动条的初始位置
+    //1.自动走
+    function autoMove (){
+        clearInterval(time1);//清除定时器
+        time1 = setInterval(function(){
+            //每隔2秒换一张图片
+            a++;
+            if (a>=lis.length){//临界值的判断
+                a = 0;
+            }
+            b++;
+            if (b>=imgs.length){
+                b = 2;//后面有一张与第一张同样的图片,走过第一张图片,直接到了第二张图片的滚动起始位置,所以b=2
+                con.scrollLeft = imgs[0].clientWidth;
+            }
+            Move();
+
+        },2000)
+    }
+    autoMove();//执行函数,进入页面后自动开始走
+    //点击右按钮
+    right.onclick = function (){
+        clearInterval(time1);
+        clearInterval(time2);//清除定时器
+        a++;
+        if (a>=lis.length){
+            a = 0;
+        }
+        b++;
+        if (b>=imgs.length){
+            b = 2;
+            con.scrollLeft = imgs.clientWidth;
+        }
+        Move();
+        autoMove();
+    };
+    //点击左按钮
+    left.onclick = function (){
+        clearInterval(time1);
+        clearInterval(time2);
+        a--;
+        if(a<0){
+            a = lis.length-1;
+        }
+        b--;
+        if(b<0){
+            b = imgs.length-3;
+            con.scrollLeft = imgs[0].clientWidth*(b+1);
+        }
+        Move();
+        autoMove();
+    };
+    //点击数字
+    for(var i=0;i<lis.length;i++){
+        lis[i].onclick=function(){
+            for (var i=0;i<lis.length;i++){
+                if(lis[i]==this){
+                    a=i;
+                    b=i+1;
+                    Move();
+                    autoMove();
+                }
+            }
+        }
+    }
+    //5.封装公用代码
+    function Move(){
+        var start = con.scrollLeft;//运动起点
+        var end = imgs[0].clientWidth*b;//运动终点
+        var change = end-start;//变化量
+        var stepmin = 0; //起始步数
+        var stepmax = 20;//最大步数
+        var everystep = change/stepmax;//每步所走的距离
+        clearInterval(time2);
+        time2 = setInterval(function(){
+            stepmin++;
+            if(stepmin>=stepmax){
+                clearInterval(time2);
+            }
+            start +=everystep;//起始位置变化
+            con.scrollLeft = start;//滚动条变化
+        },20)
+
+        for (var i=0;i<lis.length;i++){
+            lis[i].className='';
+        }
+        lis[a].className='show';
+    }
+</script>
+<html>
+

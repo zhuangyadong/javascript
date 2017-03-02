@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        button {width: 300px;height: 50px;font-size: 30px;}
+        div {width: 600px;height: 600px;margin: 0 auto;
+            line-height: 300px;text-align: center;font-size: 200px;background-color: rgba(12, 5, 10, 0.34)}
+    </style>
+</head>
+<body>
+<button>开始</button>
+<br/>
+<button>停止</button>
+<div></div>
+<script>
+    var arr = ["庄亚东","张翔","白永向","张伟","李莹","杨新达","高丽丽","冯秀瑞","李龙","甄星星","司徒德隆","褚楚","郭高博","张今迈","蔡睿智","贺文硕","黄佳明","苏玉广","安聪颖","崔俊峰","党军华","胡鑫","严坤坤","刘明冬"];
+    var btns = document.getElementsByTagName("button");
+    var div = document.getElementsByTagName("div")[0];
+    //1.产生随机数,显示在div上
+    function abc() {
+        //产生 0~23的随机数,数组的个数是24个
+        var num = parseInt(Math.random()*100) % 24;
+        //根据随机数索引,取得数组中的某一个人
+        var name = arr[num];
+        div.innerHTML = name;
+    }
+    //2.开启定时器-测试
+    //        var timer = setInterval(chooseStudent,10);
+    //3.绑定事件
+    var timer = null;
+    btns[0].onclick = function () {
+        //点击开始,不断选择学生
+        timer = setInterval(abc,10);
+        //每次开始之后,3秒之后自动停止
+        setTimeout(stopTimer,3000);
+    };
+    btns[1].onclick = function () {
+        //点击停止,清除定时器
+        clearInterval(timer);
+    };
+    //4.5秒之后自动停止,使用延时定时器
+    function stopTimer() {
+        clearInterval(timer);
+    }
+</script>
+</body>
+</html>

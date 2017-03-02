@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta>charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    // 数组:
+    // 1.数组的创建
+    //    var arr0 = [];//空数组
+    //    var arr1 = ["apple","huawei","xiaomi"];
+    //    var arr2 = new Array();//空数组
+    //    arr2[0] = "apple";
+    //    arr2[1] = "huawei";
+    //    console.log(arr2);
+    //    var arr3 = new Array(3);//创建一个数组个数是3的数组
+    //    alert(arr3.length);//打印数组的长度
+    //    var arr4 = new Array("apple","huawei");
+
+    //    //2.数组的类型检测
+    //    var arr5 = [1,2,3,4];
+    //////<1> arr5 instanceof Array 判断 arr5是否是Array类型,instanceof 只能应用于对象
+    ////    alert(typeof arr5); //object
+    ////    alert(arr5 instanceof Array);
+    //    //<2> 新方法 Array.isArray(arr5)
+    //    alert(Array.isArray(arr5));
+
+    //3.join方法,把数组以某个分割符隔开,形成一个字符串
+    //    var arr6 = [1,2,3,4];
+    //    //需求 产生字符串  1-2-3-4
+    //    var str1 = arr6.join("-");//指定以 减号隔开
+    //    alert(str1);
+    //    //不指定任何分隔符,则默认取 逗号
+    //    var str2 = arr6.join(); //以逗号隔开
+    //    alert(str2);
+
+    //4.数组的栈方法,push()往数组最后添加元素  pop()删除数组的最后一个元素
+    //    var arr7 = [1,2,3,4,5];
+    //    arr7.push(6);
+    //    document.write(arr7+"<br />");
+    //    arr7.push(7,8,9);//一次往数组最后添加多个
+    //    document.write(arr7+"<br />");
+    //    //pop()删除元素最后一个,并且返回最后一个的值
+    //    var del = arr7.pop();
+    //    alert("del是被删除的元素"+del);
+    //    document.write(arr7)
+
+    //5.数组的迭代方法(遍历数组的每一项,并且可能对每一项进行操作,使用时需要传入一个函数)
+    //    //<1> arr.forEach() 方法,遍历数组,没有返回值
+    //    var arr8 = ["apple","huawei","sangsung","xiaomi","honor","360","le2","meizu"];
+    //    arr8.forEach(function (item,index,arr) {
+    //        //item:数组中每一项的值 apple
+    //        //index: 每一项的索引,  0
+    //        //arr: 数组本身的引用 , arr === arr8
+    //        //这个括号中的函数会被调用多次,item,index,都会被赋值多次,每次从数组中取出一个
+    //        document.write("item:"+item+"&nbsp;"+"index:"+index+"<br />");
+    //    });
+    //<2>filter()过滤数组中返回值为false的元素,反悔一个新的数组(需要在函数中return true或者false,为true的元素会留下来)
+    //    var arr9 = [1,2,3,4,5,6,7,8,9];
+    //  var newArr =  arr9.filter(function (item,index,arr) {
+    //        if(item%2==1) {
+    //            return true;//留下这个元素
+    //        }
+    //        return false;
+    //    });
+    //    document.write(arr9);//原数组没有改变
+    //    document.write("<br>");
+    //    document.write(newArr);
+
+    //<3>map() ,可以修改数组中的每一项,新的每一项形成一个新的数组
+    //    var arr10 = ["199","299","399","499","998","999","1999","3999"];
+    //    //需求: 给数组中的每一项前面加上 "$"符号
+    //    var newArr1 = arr10.map(function (item,index,arr) {
+    //        return "$"+item; //返回某一项的值,最后构成一个新的数组
+    //    });
+    //    document.write(newArr1);
+</script>
+</body>
+</html>

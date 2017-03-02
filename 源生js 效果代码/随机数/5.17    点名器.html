@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            background: #000;
+        }
+        #btn{
+            position: absolute;
+           top: 50px;
+            left: 40%;
+            font-size: 80px;
+            margin: 20px auto;
+            color: #fff;
+        }
+        #con{
+            position: absolute;
+            top: 300px;
+            left: 37%;
+            font-size: 100px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="btn">start</div>
+<div id="con">翻滚吧</div>
+<script>
+    var btn=document.getElementById('btn');
+    var con=document.getElementById('con');
+    var arr=["庄亚东","张翔","白永向","张伟","李莹","杨新达","高丽丽","冯秀瑞","李龙","甄星星","司徒德隆","褚楚","郭高博","张今迈","蔡睿智","贺文硕","黄佳明","苏玉广","安聪颖","崔俊峰","党军华","胡鑫","严坤坤","刘明冬","李君楠"];
+    var flag= 1,L=arr.length,time=null;
+    btn.onclick= function (){
+        if(flag==1){
+            flag=2;
+            btn.innerHTML='stop';
+            time=setInterval(function(){
+                var x=Math.floor(Math.random()*L);
+                con.innerHTML=arr[x];
+            },50)
+        }else{
+            flag=1;
+            btn.innerHTML='start';
+            clearInterval(time);
+        }
+    };
+    document.onkeydown=function(ab){
+      var b=ab||window.event;
+        if(b.keyCode==32){
+            if(flag==1){
+                flag=2;
+                btn.innerHTML='stop';
+                time=setInterval(function(){
+                    var x=Math.floor(Math.random()*L);
+                    con.innerHTML=arr[x];
+                },50)
+            }else{
+                flag=1;
+                btn.innerHTML='start';
+                clearInterval(time);
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>轮播图透明度</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" href="reset.css">
+	<style>
+	#box{
+		width:670px;
+		height:240px;
+		border:1px solid red;
+		margin:30px auto;
+		position:relative;
+	}
+	#con img{
+		width:670px;
+		height:240px;
+		display:block;
+		position:absolute;
+		left:0px;
+		top:0px;
+		opacity:0;
+	}
+	#con .show{display:block;opacity:1;}
+	#num{
+		overflow:hidden;
+		width:200px;
+		height:25px;
+		position:absolute;
+		right:0px;
+		bottom:10px;
+	}
+	#num li{
+		float:left;
+		width:25px;
+		height:25px;
+		border-radius:50px;
+		margin-right:10px;
+		text-align:center;
+		line-height:25px;
+		background-color:red;
+	}
+	#num .color{background:#ccc;}
+	#left{
+		width:25px;
+		height:24px;
+		background:url(images/fx1.png) 0px 0px no-repeat;
+		position:absolute;
+		left:0px;
+		top:105px;
+	}
+	#right{
+		width:25px;
+		height:24px;
+		background:url(images/fx2.png) 0px 0px no-repeat;
+		position:absolute;
+		right:0px;
+		top:105px;
+	}	
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="con">
+			<img src="images/1.jpg" alt="" class="show">
+			<img src="images/2.jpg" alt="">
+			<img src="images/3.jpg" alt="">
+			<img src="images/4.jpg" alt="">
+			<img src="images/5.jpg" alt="">
+		</div>
+		<ul id="num">
+			<li class="color">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+		<p id="left"></p>
+		<p id="right"></p>
+	</div>
+</body>
+<script>
+var box=document.getElementById('box');
+var con=document.getElementById('con');
+var imgs=con.children;
+var num=document.getElementById('num');
+var lis=num.children;
+var left=document.getElementById('left');
+var right=document.getElementById('right');
+var time1=null,time2=null;
+var a=0;//保存下标
+//自动走
+function automove(){
+	a++;
+	if(a>=imgs.length){
+		a=0;
+	}
+	move(a);
+}
+//进入页面自动走
+time2=setInterval(automove,2000);
+
+//鼠标移动上数字之后
+for(var i=0;i<lis.length;i++){
+	lis[i].index=i;
+	lis[i].onmouseover=function(){
+		clearInterval(time2);
+		a=this.index;
+		move(a);
+		// time2=setInterval(automove,2000);
+	}
+	lis[i].onmouseout=function (){
+		time2=setInterval(automove,2000);
+	}	
+}
+
+
+//点击右按钮
+right.onclick=function(){
+	clearInterval(time2);//清除自动走的状态，只走一张
+
+	a++;
+	if(a>=imgs.length){
+		a=0;
+	}
+	move(a);
+ 	time2=setInterval(automove,2000);
+}
+//点击左按钮
+left.onclick=function(){
+	clearInterval(time2);
+	a--;
+	if(a<0){
+		a=imgs.length-1;
+	}
+	move(a);
+	time2=setInterval(automove,2000);
+}
+
+
+function move(a){
+	//走一张图片的内部变化
+	//先清空样式
+	clearInterval(time1);
+	for(var i=0;i<lis.length;i++){
+		lis[i].style.background="red";
+		imgs[i].style.opacity=0;
+		imgs[i].style.display='none';
+	}
+	//对当前显示设置样式
+	lis[a].style.background="#ccc";
+	imgs[a].style.display="block";
+	//一张图片中透明度变化
+	var opa=0;
+	// clearInterval(time1);
+	time1=setInterval(function(){
+		opa+=0.02;
+		if(opa>=1){
+			opa=1;
+			clearInterval(time1);
+		}
+		imgs[a].style.opacity=opa;
+	},25)
+}
+</script>
+</html>

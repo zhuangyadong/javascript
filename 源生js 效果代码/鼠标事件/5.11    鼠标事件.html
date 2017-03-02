@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    div{
+        width:20px ;
+        height: 20px ;
+        background-color: red;
+        position: absolute;
+    }
+</style>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+
+
+</body>
+<script>
+    var divs = document.getElementsByTagName('div');
+    document.onmousemove=function(ev){
+         var e=ev||window.event;
+        var x=-1,timer=null;
+        timer=setInterval(function(){
+            x++;
+            if(x>=divs.length){
+                clearInterval(timer);
+                x=divs.length-1;
+            }
+            divs[x].style.left= e.clientX+"px";
+            divs[x].style.top= e.clientY+"px";
+        },100);
+    }
+</script>
+</html>

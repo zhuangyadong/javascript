@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background: #ccc;
+        }
+        #wrap{
+            width: 1200px;
+            margin: 30px auto 0;
+            background: #fff;
+            overflow: hidden;
+            padding: 10px;
+            position: relative;
+        }
+        #minbox{
+            float: left;
+            width: 350px;
+            height: 350px;
+            border: 1px solid green;
+            position: relative;
+            cursor: move;
+        }
+        #minbox img{
+            width: 350px;
+            height: 350px;
+            display: block;
+        }
+        #minbox #mask{
+            width: 175px;
+            height: 175px;
+            background: yellow;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="minbox">
+        <img src="images/s71.jpg" alt=""/>
+        <p id="mask"></p>
+    </div>
+    <div id="maxbox">
+        <img src="images/s72.jpg" alt=""/>
+    </div>
+    <div id="con">
+        <img src="images/caidan.png" alt=""/>
+    </div>
+</div>
+</body>
+<script>
+    function offsetTL(obj){
+        var t= 0,l=0;
+        while(obj){
+            t=t+obj.offsetTop+obj.clientTop;
+            l=l+obj.offsetLeft+obj.clientLeft;
+            obj=obj.offsetParent;
+        }
+        return {top:t,left:l}
+    }
+    var minbox=document.getElementById('minbox');
+    var minImg=minbox.children[0];
+    var mask=minbox.children[1];
+    var maxbox=document.getElementById('maxbox');
+    var maxImg=maxbox.children[0];
+    minbox.onmousemove=function(ev){
+        mask.style.display='block';
+        maxbox.style.display='block';
+        var e=ev||window.event;
+        var maskT= e.clientY-offsetTL(minbox).top
+    }
+</script>
+</html>

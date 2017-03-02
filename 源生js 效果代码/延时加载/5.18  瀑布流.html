@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            background: #000;
+        }
+        #con{
+            width: 1080px;
+            margin: 0 auto;
+            overflow: hidden;
+            /*background: #000;*/
+        }
+        #con ul{
+            width: 250px;
+            float: left;
+            margin: 0 10px;
+        }
+        #con ul li{
+            width: 250px;
+            margin:10px 0;
+        }
+        #con ul li img{
+            width: 250px;
+            border: 0;
+            vertical-align: bottom;
+        }
+    </style>
+</head>
+<body>
+    <div id="con">
+        <ul>
+            <!--<li><img src="../pubuliu/p1.jpg" alt=""/></li>-->
+        </ul>
+        <ul>
+            <!--<li><img src="../pubuliu/p2.jpg" alt=""/></li>-->
+        </ul>
+        <ul>
+            <!--<li><img src="../pubuliu/p3.jpg" alt=""/></li>-->
+        </ul>
+        <ul>
+            <!--<li><img src="../pubuliu/p4.jpg" alt=""/></li>-->
+        </ul>
+    </div>
+</body>
+<script>
+    var con=document.getElementById('con');//获取con
+    var oul=con.children;//获取con的儿子  ul
+    for(var i=0;i<16;i++){
+        abc();
+    }
+    function abc(){
+        var oli=document.createElement('li');//在document文档里创建li
+        var x=Math.ceil(Math.random()*63);//1-63 随机数  向上取整  1-63之间的图片任意一张  设变量名为x
+        oli.innerHTML='<img src="../../pubuliu/p'+x+'.jpg" alt=""/>';//在li里添加任一一张图片x
+        var ul1=oul[0].offsetHeight;//第一个ul的高度
+        var ul2=oul[1].offsetHeight;//第一个ul的高度
+        var ul3=oul[2].offsetHeight;//第一个ul的高度
+        var ul4=oul[3].offsetHeight;//第一个ul的高度
+        var xiao=Math.min(ul1,ul2,ul3,ul4);//从上面四个ul中取出高度最小的一个
+        for(var i=0;i<oul.length;i++){
+            if(oul[i].offsetHeight==xiao){//如果oul[i]里等于xiao最小的
+                oul[i].appendChild(oli);//就在这个最小的oul里附加一个oli
+            }
+        }
+    }
+    window.onscroll=function(){
+        var winH=document.documentElement.clientHeight;//获取浏览器高度 设变量为winH
+        var wenH=document.documentElement.offsetHeight;//获取文档高度  设变量为wenH
+        var yinH=document.documentElement.scrollTop||document.body.scrollTop;//获取已经浏览过得高度
+        if(wenH-winH-yinH<500){//用文档高度减去浏览器的高度减去已经浏览的高度  获得未浏览的高度
+            for(var i=0;i<16;i++){
+                abc();
+            }
+        }
+    }
+</script>
+</html>

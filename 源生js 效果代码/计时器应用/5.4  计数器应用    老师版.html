@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        button{width: 100px;height: 22px;outline: none;}
+        input{outline: none;padding-left: 6px;}
+    </style>
+</head>
+<!--发送验证码-->
+<body>
+<input type="text" placeholder="手机号"/>
+<button>发送验证码</button>
+<script>
+
+    //过程分析:点击发送按钮,首先获取手机号,然后调用发短信后台接口,然后开始倒计时,按钮变灰,不断修改按钮上的文字,最后时间到之后恢复计数器,样式
+    var btns = document.getElementsByTagName("button");
+    var inputs = document.getElementsByTagName("input");
+    var count = 10;//倒计时计数器
+    var timer = null; //定时器,每隔一秒修改按钮文字
+    btns[0].onclick = function () {
+        if(!inputs[0].value) {//输入为空 ""
+            alert("输入不能为空");
+            return;//结束当前函数的执行
+        }
+        this.disabled = true;//让按钮不可点击
+        this.style.color = "lightgray";//修改字体颜色
+        timer = setInterval(autoCount,1000);//开始计数
+    }
+    //自动计数,到0的时候要恢复数据和样式
+    function autoCount() {
+        if(count==0) {
+            clearInterval(timer);//停止计时器
+            count = 10;//计数器恢复起始值
+            btns[0].innerHTML = "发送验证码";//恢复本来文字
+            btns[0].style.color = "";//恢复字体颜色
+            btns[0].disabled = false;//让按钮可以点击
+        }
+        else {
+            btns[0].innerHTML = count+"S后重发";
+            count--;
+        }
+    }
+</script>
+</body>
+</html>

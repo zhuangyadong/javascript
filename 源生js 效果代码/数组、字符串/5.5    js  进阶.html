@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var arr = [2,3,"we","34"];
+//    alert(Array.isArray(arr));
+//    document.write(typeof arr.join());
+//    arr.forEach(function(item,index,arr){
+//        document.write("$"+item);
+//    });
+//    var arr1 = arr.filter(function (item,index,arr){
+//        if(index%2) {
+//            return item;
+//        }
+//    });
+//    alert(arr1 instanceof Array);
+    var arr1 = arr.map(function (item,index,arr) {
+        return "狗"+item;
+    });
+    alert(arr1);
+</script>
+</body>
+</html>

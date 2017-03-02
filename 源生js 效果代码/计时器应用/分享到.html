@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 300px;
+            background: #ccc;
+            position: absolute;
+            left: -100px;
+            top: 0;
+        }
+        #box div{
+            width: 30px;
+            height: 80px;
+            background: blue;
+            position: absolute;
+            right: -30px;
+            top: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="con">分享到</div>
+</div>
+<script>
+    var box=document.getElementById('box');
+    var con=document.getElementById('con');
+    var time=null,time1=null;
+    var a=0;
+    con.onmouseover=function(){
+        clearInterval(time);
+        clearInterval(time1);
+        time=setInterval(function(){
+            a++;
+            if(a>=0){
+                a=0;
+                clearInterval(time);
+            }
+            box.style.left=a+'px';
+        },20);
+    }
+    con.onmouseout=function(){
+        clearInterval(time1);
+        clearInterval(time);
+        time1=setInterval(function(){
+            a--;
+            if(a<=-100){
+                a=-100;
+                clearInterval(time);
+            }
+            box.style.left=a+'px';
+        },20)
+    }
+</script>
+</body>
+</html>

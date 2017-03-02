@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        span {font-size: 30px;}
+        button{
+            width: 100px;
+            height: 35px;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="clockDiv">
+    <span>00</span>
+    <span>:</span>
+    <span>00</span>
+    <span>:</span>
+    <span>00</span>
+    <br/>
+    <button>开始</button>
+    <button>停止</button>
+</div>
+<script>
+    var spans = document.getElementById("clockDiv").getElementsByTagName("span");
+    var buts = document.getElementById('clockDiv').getElementsByTagName('button');
+    //1.每隔一秒,秒钟加一,秒变量
+    var second = 0;//秒
+    var minute = 0;//分
+    var hour = 0;//小时
+
+    //2.使用定时器,自动改变秒
+
+        //显示时分秒
+        spans[0].innerHTML = houStr;
+        spans[2].innerHTML = minStr;
+        spans[4].innerHTML = secStr;
+    }
+    //开始定时器,秒钟自动增长
+    var timer = setInterval(autoInrease,10);
+//    var timer = null;
+    btns[0].onclick = function () {
+        function autoInrease() {
+            second++;
+            if(second==100) {
+                minute++;//分钟加一
+                second=0;//清空秒
+            }
+            if(minute==60) {
+                hour++;
+                minute=0;
+            }
+            //把秒显示出来
+            var secStr = second ;
+            if(secStr < 10) {//个位补零
+                secStr = "0" + secStr;
+            }
+            //把分钟和小时显示出来
+            var minStr = minute;
+            if(minStr<10) { //如果是个位数分钟的话,前面补零
+                minStr = "0" + minStr;
+            }
+            var houStr = hour;
+            if(houStr<10) {
+                houStr = "0" + houStr;
+            }
+    };
+    btns[1].onclick = function () {
+    };
+    function stopTimer() {
+        clearInterval(timer);
+    }
+</script>
+</body>
+</html>

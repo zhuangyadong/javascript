@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .clearfix {
+            *zoom: 1;
+        }
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .wrap {
+            width: 400px;
+            height: 500px;
+            border: 1px solid red;
+        }
+        .pic {
+            width: 300px;
+            height: 400px;
+            overflow: hidden;
+            margin: 50px;
+            border: 1px solid black;
+        }
+        .img {
+            width: 2000px;
+        }
+        .img img {
+            width: 300px;
+            height: 400px;
+            float: left;
+        }
+        .xiabiao {
+            position: absolute;
+            width: 400px;
+            height: 30px;
+            border: 1px solid blue;
+            text-align: center;
+            line-height: 30px;
+        }
+        .xiabiao span {
+            margin: 5px 15px;
+            color: #080809;
+            font-size: 14px;
+
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrap">
+        <div id="pic" class="pic">
+            <div id="img" class="img clearfix">
+                <img src="img/gun1.png" alt=""/>
+                <img src="img/meinv1.jpg" alt=""/>
+                <img src="img/meinv2.jpg" alt=""/>
+                <img src="img/meinv4.jpg" alt=""/>
+                <img src="img/meinv5.jpg" alt=""/>
+            </div>
+        </div>
+        <div id="xiabiao" class="xiabiao">
+            <span>左滚</span>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>又滚</span>
+        </div>
+    </div>
+    <script>
+//        变量声明
+
+        var pic = document.getElementById("pic");
+        var imgs = pic.getElementsByTagName("img");
+
+
+//        获取全部的控制标签
+        var btns = document.getElementById("xiabiao").getElementsByTagName("span");
+        var time = null;        //第一个计时器
+        var autoNum = 0;       //计数，当前图片的索引值
+        var imgWidth = 300;     //每张图片的宽度
+        var time2 = null;       //第二个计时器
+//        window.onload = clock; //文档加载完毕，开启计时器
+//        pic.onmouseout = clearClock;
+//        pic.onmousemove = autoMove;
+
+//        实现起点到终点的滚动效果
+        function moveTo(startPos,endPos) {
+
+            //函数开始先关掉计时器，防止计时器被重复调用
+            if(time){
+                clearInterval(time);
+            }
+
+            var startPos = startPos;    //起点的位置
+            var endPos = endPos;        //终点的位置
+            var step = 0;               //当前位置
+            var stepMax = 300;           //每次滚动需要的总步数
+            var everyStep = (endPos-startPos)/stepMax;   //每步的距离
+            time = setInterval(move,5);       //计时器
+            //实现一次的滚动，从起点走到终点
+            function move() {
+                step++;
+                pic.scrollLeft+=everyStep; //每当走了一步后，走过的距离
+                if(step == stepMax){
+                    pic.scrollLeft = endPos; //走到了终点的位置
+                    clearInterval(time);    //关闭计时器
+                }
+            }
+        }
+//        控制自动滚动的变化
+        function autoMove() {
+            autoNum++;
+
+            if(autoNum == imgs.length){
+                autoNum = 0;
+            }
+            if(autoNum == -1){
+                autoNum = imgs.length-1
+            }
+            btnColor();
+            moveTo(pic.scrollLeft,imgWidth*autoNum)
+        }
+
+        for(var i=1 ;i<btns.length-1; i++) {
+            //        为所有的数字绑定鼠标事件
+            btns[i].onmouseover = function() {
+                clearClock();
+                for(var i=1 ;i<btns.length-1; i++){
+                    if(this == btns[i]){
+                        autoNum= i-1;
+                        btnColor();
+                        moveTo(pic.scrollLeft,imgWidth*(i-1));
+                    }
+                }
+                clock();
+            }
+            btns[i].onmouseout = function() {
+                clearClock();
+            }
+        }
+
+            //为左右按键添加绑定事件
+        btns[0].onmousemove = function() {
+            clearClock();
+            autoNum-=2; //autoMove()会加1
+            autoMove();
+            clock()
+        }
+        btns[btns.length-1].onmousemove = function() {
+            clearClock();
+            autoMove();
+            clock();
+        }
+
+        btns[btns.length-1].onmouseout = btns[0].onmouseout = function() {
+            clearClock();
+        }
+
+
+        function clock() {
+            time2 = setInterval(autoMove,3000);
+        }
+
+        function clearClock() {
+            if(time2){
+                clearInterval(time2);
+            }
+        }
+
+        function btnColor() {
+            for(var i=1 ;i<btns.length-1; i++) {
+                btns[i].style.color = "black";
+            }
+            btns[autoNum+1].style.color = "red";
+        }
+    </script>
+</body>
+</html>

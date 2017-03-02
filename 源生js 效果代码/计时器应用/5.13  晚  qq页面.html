@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #wai{
+            width: 100px;
+            height: 200px;
+            background-color: rgba(23, 23, 23, 0.43);
+            position: absolute;
+            top: 20px;
+            right: 0;
+        }
+        #xiang{
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        #liao{
+            width: 50px;
+            height: 100px;
+            background-color: rgba(2, 60, 77, 0.43);
+            position: absolute;
+            left: -52px;
+            display: none;
+            opacity: 0;
+        }
+        #xiang:hover{
+            border: 2px solid crimson;
+        }
+    </style>
+</head>
+<body>
+<div id="wai">
+    <div id="box">
+        <div id="xiang"></div>
+        <div id="liao"></div>
+    </div>
+</div>
+</body>
+<script>
+    var box=document.getElementById('box');
+//    var xiang=document.getElementById('xiang');
+    var liao=document.getElementById('liao');
+    var yun=0;
+    var ming=0;
+    var time1=null,time2=null,time3=null,time4=null;
+    function qing(){
+        clearTimeout(time1);
+        clearTimeout(time3);
+        clearInterval(time2);
+        clearInterval(time4);
+    }
+    box.onmouseover=function(){
+        qing();
+        liao.style.display='block';
+        time1=setTimeout(function(){
+            time2=setInterval(function(){
+                yun+=2;
+                ming+=0.02;
+                if(yun>=30){
+                    yun=30;
+                    ming=1;
+                    clearInterval(time2);
+                }liao.style.top=yun+"px";
+                liao.style.opacity=ming;
+            },20)
+        },400)
+    };
+    box.onmouseout = function(){
+        qing();
+        time3=setTimeout(function(){
+
+            time4=setInterval(function(){
+                yun-=2;
+                ming-=0.02;
+                if(yun<=0){
+                    yun=0;
+                    ming=0;
+                    clearInterval(time4);
+                    liao.style.display="none";
+                }
+                liao.style.top=yun+"px";
+                liao.style.opacity=ming;
+            },20)
+        },400)
+    }
+</script>
+</html>

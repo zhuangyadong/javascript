@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style>
+        #div1{
+            width:300px;
+            height:250px;
+            border: 5px solid;
+            position: relative;
+            margin: 50px auto;
+            background: rgba(23, 23, 23, 0.6);
+        }
+        #div2{
+            width: 30px ;
+            height: 30px;
+            background: rgba(242, 241, 241, 0.6);
+            position:absolute;
+            top: 10px;
+            left: 10px;
+            border-radius: 25px;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 900;
+
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <div id="div2">嗨</div>
+</div>
+</body>
+<script>
+    var wai = document.getElementById('div1');
+    var li = document.getElementById('div2');
+    var x=0,y= 0,a=20,b=20;
+    setInterval(function(){
+        if (x==0){
+            a++;
+            if(a>=wai.clientWidth-li.clientWidth){
+                a=wai.clientWidth-li.clientWidth;
+                x=1;
+            }
+            li.style.left=a+"px";
+        }	else{
+            a--;
+            if(a<=0){
+                a=0;
+                x=0;
+            }
+            li.style.left=a+"px";
+        }
+    },20);
+    setInterval(function(){
+        if(y==0){
+            b++;
+            if(b>=wai.clientHeight-li.clientHeight){
+                b=wai.clientHeight-li.clientHeight;
+                y=1;
+            }li.style.top=b+"px"}
+            else{
+                b--;
+                if(b<=0){
+                    b=0;
+                    y=0;
+                }
+            }li.style.top=b+"px";
+    },20)
+</script>
+</html>

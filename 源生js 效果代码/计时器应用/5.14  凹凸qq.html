@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #wai{
+            width: 281px;
+            height: 691px;
+            background: url("../img/aotu1.png") no-repeat;
+            position: absolute;
+            right: 0;
+            top: 10px;
+        }
+        #tou{
+            width: 61px;
+            height: 61px;
+            border: 1px solid;
+            position: absolute;
+            top: 43px;
+            left: 9px;
+        }
+        #tou:hover{
+            border: 2px solid rgb(10,145,209);
+        }
+        #zl{
+            width: 277px;
+            height: 332px;
+            background: url("../img/aotu2.png");
+            position: absolute;
+            left: -280px;
+            display: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="wai">
+        <div id="aotu">
+            <div id="tou"></div>
+            <div id="zl"></div>
+        </div>
+    </div>
+</body>
+<script>
+    var aotu=document.getElementById('aotu');
+    var tou=document.getElementById('tou');
+    var zl=document.getElementById('zl');
+    var xia= 0;
+    var ming=0;
+    var time1=null,time2=null,time3=null,time4=null;
+    function qing(){
+        clearTimeout(time1);
+        clearTimeout(time3);
+        clearInterval(time2);
+        clearInterval(time4);
+    }
+    aotu.onmouseover=function(){
+        qing();
+        zl.style.display='block';
+        time1=setTimeout(function(){
+            time2=setInterval(function(){
+                xia+=2;
+                ming+=0.02;
+                if(xia>=60){
+                    xia=60;
+                    ming=1;
+                    clearInterval(time2);
+                }zl.style.top=xia+"px";
+                 zl.style.opacity=ming;
+            },20)
+        },400)
+    };
+    aotu.onmouseout=function(){
+        qing();
+        time3=setTimeout(function(){
+            time4=setInterval(function(){
+                xia-=2;
+                ming-=0.02;
+                if(xia<=0){
+                    xia=0;
+                    ming=0;
+                    clearInterval(time4);
+                    zl.style.display='none';
+                }zl.style.top=xia+'px';
+                 zl.style.opacity=ming;
+            },20)
+        },400)
+    }
+</script>
+</html>

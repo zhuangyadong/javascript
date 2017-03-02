@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>测试</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style>
+        #btn{
+            font-size: 30px;
+            padding: 4px 10px;
+        }
+        #num{
+            font-size: 60px;
+            color: red;
+        }
+        #num span{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">机选号码</button>
+<div id="num"></div>
+</body>
+<script>
+    var btn=document.getElementById('btn');
+    var num=document.getElementById('num');
+
+    btn.onclick=function (){
+        var arr=[];
+        for (var i = 0; i < 6; i++) {
+            var sjs=Math.ceil(Math.random()*33);//1~33随机数
+            var repeat=false;
+            for (var i = 0; i < arr.length; i++) {
+                if (sjs==arr[i]) {
+                    repeat=true;
+                    break;
+                }
+            }
+            if (repeat) {
+                i--;
+            } else{
+                arr.push(sjs);
+            }
+        }
+        var sjs2=Math.ceil(Math.random()*16);//1~16随机数
+        var arr2=arr.sort(function (a,b){return a-b;});
+        num.innerHTML=arr2+' -<span>'+sjs2+'</span>';
+    }
+</script>
+</html>

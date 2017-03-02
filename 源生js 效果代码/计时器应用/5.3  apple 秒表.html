@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #clockDiv {margin-left: 60px;margin-bottom: 20px;}
+        span {font-size: 60px;}
+        button {width: 80px;height: 80px;border-radius: 40px;border: none;outline: none;
+            margin: 0 50px;font-size: 20px;}
+        #record {margin-top: 20px;}
+        #record div {border-bottom: 1px solid lightgray;padding: 5px 0;width: 360px;height: 30px;}
+        #record span {font-size: 20px;}
+        .spleft {float: left;}
+        .spright {float: right;}
+    </style>
+</head>
+<body>
+<div id="clockDiv">
+    <span>00</span>
+    <span>:</span>
+    <span>00</span>
+    <span>:</span>
+    <span>00</span>
+</div>
+<div class="wrapbtn">
+    <button>记次</button>
+    <button>启动</button>
+</div>
+<!--显示记录的div-->
+<div id="record">
+    <!--<div>-->
+    <!--<span class="spleft">第1次记录</span>-->
+    <!--<span class="spright">00:00:00</span>-->
+    <!--</div>-->
+</div>
+<script>
+    //秒表的实现  ,分钟秒,毫秒(只显示两位)
+    var spans = document.getElementById("clockDiv").getElementsByTagName("span");
+    var btns = document.getElementsByTagName("button");
+    var record = document.getElementById("record");
+    var recordTimes = 0;//记录次数
+    var recordLeftStr = "";//记录左边的文本
+    var recordRightStr = "";//记录右边的文本
+    var insertDiv = "";//要插入的html代码
+    var isStopped = false;//计时器是否已停止
+    var timer = null;
+
+    btns[0].onclick = function () {//点击记次
+
+        //判断当前的按钮是 "记次" 还是 "复位"
+        if(this.innerHTML=="记次") {//点击记次
+            if(timer) {//如果定时器不为空null,记次
+                recordTimes++;//记次次数
+                recordLeftStr = "记次"+recordTimes;
+                recordRightStr = spans[0].innerHTML+":"+spans[2].innerHTML+":"+spans[4].innerHTML;
+                insertDiv = "<div><span class='spleft'>"+recordLeftStr+"</span><span class='spright'>"+recordRightStr+"</span></div>";
+                //在div前面插入html代码,让记录显示在前面
+                record.innerHTML = insertDiv + record.innerHTML;
+
+            }
+            else {//定时器为null
+                alert("点启动按钮！山炮 、、、");
+            }
+        }
+        else {//点击了复位(复位和记次共用同一个按钮)
+            clearInterval(timer);
+            //重置秒表文本,清空div内部文本,重置计数器
+            spans[0].innerHTML = "00";
+            spans[2].innerHTML = "00";
+            spans[4].innerHTML = "00";
+            this.innerHTML = "记次";
+            record.innerHTML = "";
+            recordTimes = 0;
+        }
+    };
+    btns[1].onclick = function () {//点击停止或者启动
+        if(this.innerHTML=="启动") {
+            clearInterval(timer);
+            timer = setInterval(autoInrease,10);
+            this.innerHTML = "停止";
+            btns[0].innerHTML = "记次";
+        }else { //停止按钮
+            clearInterval(timer);
+            timer = null;
+            this.innerHTML = "启动";
+            btns[0].innerHTML = "复位";
+             second = 0;//秒
+             minute = 0;//分
+             hour = 0;//小时
+        }
+    };
+
+    //1.每隔一秒,秒钟加一,秒变量
+    var second = 0;//秒
+    var minute = 0;//分
+    var hour = 0;//小时
+
+    //2.使用定时器,自动改变秒
+    function autoInrease() {
+        second++;
+        //第100次 的时候 ,刚好是1s
+        if(second==100) {
+            minute++;//分钟加一
+            second=0;//清空秒
+        }
+        if(minute==60) {
+            hour++;
+            minute=0;
+        }
+        //把秒显示出来
+        var secStr = second ;
+        if(secStr < 10) {//个位补零
+            secStr = "0" + secStr;
+        }
+        //把分钟和小时显示出来
+        var minStr = minute;
+        if(minStr<10) { //如果是个位数分钟的话,前面补零
+            minStr = "0" + minStr;
+        }
+        var houStr = hour;
+        if(houStr<10) {
+            houStr = "0" + houStr;
+        }
+
+        //显示时分秒
+        spans[0].innerHTML = houStr;
+        spans[2].innerHTML = minStr;
+        spans[4].innerHTML = secStr;
+    }
+    //开始定时器,每10毫秒 执行一次,10次刚好是1000ms,也就是1s
+</script>
+</body>
+</html>

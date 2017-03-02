@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #out{
+            width: 1200px;
+            margin: 20px auto 0;
+            position: relative;
+        }
+        #minbox{
+            width: 350px;
+            height: 350px;
+            float: left;
+            position: relative;
+            border: 1px solid red;
+            cursor: move;
+        }
+        #minbox img{
+            width: 350px;
+            height: 350px;
+            display: block;
+        }
+        #minbox p{
+            width: 175px;
+            height: 175px;
+            background: pink;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        #maxbox{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 0px;
+            left: 360px;
+            overflow: hidden;
+            z-index: 10;
+            box-sizing: border-box;
+            border: 1px solid;
+            display: none;
+        }
+        #maxbox img{
+            width: 800px;
+            height: 800px;
+        }
+        #con{
+            width: 540px;
+            height: 518px;
+            position: absolute;
+            top: 0;
+            left: 360px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="out">
+    <div id="minbox">
+        <img src="images/s71.jpg" alt="">
+        <p></p>
+    </div>
+    <div id="maxbox">
+        <img src="images/s72.jpg" alt="">
+    </div>
+    <div id="con">
+        <img src="images/caidan.png" alt="">
+    </div>
+</div>
+<script>
+    //获取对象到body的offsetLeft或offsetTop
+    function offsetLT(obj){
+        var l = 0,t = 0;
+        while(obj){
+            l = l+obj.offsetLeft + obj.clientLeft;
+            t = t+obj.offsetTop + obj.clientTop;
+            obj = obj.offsetParent;
+        }
+        return{left:l,top:t};
+    }
+    var minbox = document.getElementById('minbox');
+    var minImg = minbox.children[0];
+    var mask = minbox.children[1];
+    var maxbox = document.getElementById('maxbox');
+    var maxImg = maxbox.children[0];
+    minbox.onmousemove = function(ev){
+        mask.style.display = 'block';
+        maxbox.style.display = 'block';
+        var e = ev||window.event;
+        var maskT = e.clientY - offsetLT(minbox).top-mask.offsetHeight/2;
+        var maskL = e.clientX - offsetLT(minbox).left - mask.offsetWidth/2;
+        var posL = minbox.clientWidth - mask.offsetWidth;
+        var posT = minbox.clientHeight - mask.offsetHeight;
+        if(maskT>=posT){
+            maskT = posT;//最多时
+        }else if(maskT <=0 ){
+            maskT = 0;//最小时
+        };
+        if(maskL>=posL){
+            maskL = posL;
+        }else if(maskL<=0){
+            maskL = 0
+        }
+        mask.style.top = maskT+'px';
+        mask.style.left = maskL+'px';
+        var scale = maxImg.offsetWidth/minImg.offsetWidth;
+        maxbox.scrollLeft = maskL*scale;
+        maxbox.scrollTop = maskT*scale;
+    }
+    minbox.onmouseout = function(){
+        mask.style.display = 'none';
+        maxbox.style.display = 'none';
+    }
+</script>
+</body>
+</html>

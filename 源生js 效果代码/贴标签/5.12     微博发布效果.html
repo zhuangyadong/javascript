@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'/>
+    <title></title>
+    <style type="text/css">
+        *{list-style: none;}
+        #box{
+            width: 500px;
+            background:skyblue;
+            margin:0 auto;
+        }
+        #bt{
+            width: 400px;
+            height: 30px;
+            background: transparent;
+            border:1px solid black;
+        }
+        #nr{
+            width: 400px;
+            height: 100px;
+            background:transparent;
+            border:1px solid black;
+        }
+        #list li h3{
+            width: 400px;
+            height: 30px;
+            background: transparent;
+            border:1px solid black;
+        }
+        #list li p{
+            width: 400px;
+            height: 100px;
+            background:transparent;
+            border:1px solid black;
+        }
+        #list li h3 a{
+            float:right;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<div id='box'>
+    <div>
+        <span> 标题：</span>
+        <input type='text' id='bt'/>
+    </div>
+    <div>
+        <span>内容：</span>
+        <textarea name="" id="nr" cols="30" rows="10" maxlength='140'></textarea>
+    </div>
+    <div style='text-align:right'>
+        <button id='btn'>发布</button>
+    </div>
+    <ul id='list'>
+
+    </ul>
+</div>
+<script type="text/javascript">
+    var box = document.getElementById('box');
+    var bt = document.getElementById('bt');
+    var nr = document.getElementById('nr');
+    var btn = document.getElementById('btn');
+    var list = document.getElementById('list');
+    btn.onclick = function(){
+        var oli = document.createElement('li');
+//        console.log(oli);
+        oli.innerHTML = '<h3>'+bt.value+'<a href="#">X</a>'+'</h3>'+'<p>'+nr.value+'</p>'
+        // list.appendChild(oli);
+        if(bt.value == '' || nr.value ==''){
+            alert('标题或内容不能为空！')
+        }else{
+            if(list.children.length == 0){
+                list.appendChild(oli);
+                bt.value='';
+                nr.value='';
+            }else{
+                list.insertBefore(oli,list.children[0]);
+                bt.value='';
+                nr.value='';
+            }
+        }
+
+        var close = document.getElementsByTagName('a');
+        for(var i=0;i<close.length;i++){
+            close[i].onclick = function(){
+                list.removeChild(this.parentNode.parentNode)
+            }
+        }
+    }
+</script>
+</body>
+</html>

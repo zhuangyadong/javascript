@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #div1{
+            width: 200px;
+            background: rgba(5, 5, 5, 0.6);
+            padding: 0 10px 0 10px;
+            overflow: hidden;
+        }
+        #inp{
+            width: 150px;
+            height: 30px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <!--<span>奋斗ing<a href="">x</a></span>-->
+</div>
+    <input id="inp" type="text"/>
+    <button id="but">贴上</button>
+</body>
+<script>
+    var div1 = document.getElementById('div1');
+    var inp = document.getElementById('inp');
+    var but = document.getElementById('but');
+    but.onclick = function(){
+        var nei = document.createElement('span');
+            if(inp.value){
+                nei.innerHTML=inp.value+"<a href='javascript:;'>x</a>";
+                div1.appendChild(nei);
+                inp.value="";
+            }else{
+                alert('去你妈的，傻逼玩意');
+            }
+        var a1= document.getElementsByTagName('a');
+        for(var i=a1.length-1;i>=0;i--){
+            a1[i].onclick=function(){
+                div1.removeChild(this.parentNode);
+            }
+        }
+    }
+</script>
+</html>

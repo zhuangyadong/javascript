@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<style>
+	.bgred{
+		background: red;
+	}
+	.blue{
+		color: blue;
+	}
+</style>
+</head>
+<body>
+	<ul>
+		<li class="bgred">11111</li>
+		<li>22222</li>
+		<li class="bgred blue abc">33333</li>
+		<li>44444</li>
+		<li class="bgred">55555</li>
+	</ul>
+</body>
+<script>
+function byclass1(clName){//全局获取
+	var tags=document.all?document.all:document.getElementsByTagName('*');//获取页面中所有标签
+	var arr=[];//创建一个空数组
+	for (var i = 0; i < tags.length; i++) {//遍历所有标签
+		// if (tags[i].className==clName) {//找出有指定类名的标签
+		if (tags[i].className.indexOf(clName)!=-1) {
+			arr.push(tags[i]);//插入数组arr
+		}
+	}
+	return arr;//返回数组arr
+}
+
+var bgred=byclass1('bgred');
+alert(bgred.length);
+//alert(bgred[0].innerHTML);
+//alert(bgred[1].innerHTML);
+//alert(bgred[2].innerHTML);
+
+// var li3=document.getElementsByTagName('li')[2];
+// alert(li3.className);// bgred blue abc
+</script>
+</html>

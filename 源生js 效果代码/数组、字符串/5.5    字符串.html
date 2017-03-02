@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+
+    //练习:
+    //现在有字符串:
+    //http://www.xx.com?name=yang&sex=1&age=20&tel=110.....
+    //需求: 写一个函数,取出某个参数的值getSome(key)
+    //举例: getSome("name") 获取  yang
+    //  getSome("age")  获取  age的值是 20
+    //没有则返回undefined
+    //        var key = "age";//要查找age是多少?
+    //        var str = "http://www.xx.com?name=yang&sex=1&age=20&tel=110";
+    //        var str1 = str.split("?")[1];//得到后面的字符串
+    //        var arr = str1.split("&");//得到了name=yang,  ...
+    //        document.write(arr);
+    //        for(var i= 0,len=arr.length;i<len;i++) {//遍历数组,["name=yang","sex=1"...]
+    //            var strX = arr[i];//取出一个元素: name=yang
+    //            var arr2 = strX.split("=");//分割成["name","yang"]
+    //            if(arr2[0]==key) { //"age" == "age"
+    //                alert("找到了"+key+"的值是:"+arr2[1]);
+    //            }
+    //        }
+
+    //包装成函数是
+    function getSome(url,key) {
+        var str1 = url.split("?")[1];//得到后面的字符串
+        var arr = str1.split("&");//得到了name=yang,  ...
+        for(var i= 0,len=arr.length;i<len;i++) {//遍历数组,["name=yang","sex=1"...]
+            var strX = arr[i];//取出一个元素: name=yang
+            var arr2 = strX.split("=");//分割成["name","yang"]
+            if(arr2[0]==key) { //"age" == "age"
+                return arr2[1]; //返回找到的值
+            }
+        }
+        return undefined; //没有找到
+    }
+    var str = "http://www.xx.com?name=yang&sex=1&age=20&tel=110";
+    alert(getSome(str,"name"));
+
+</script>
+</body>
+</html>

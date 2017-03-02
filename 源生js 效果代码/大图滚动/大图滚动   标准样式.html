@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>大图滚动3</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="../../公用代码/reset.css">
+<style>
+	#wrap{
+		width: 386px;
+		height: 292px;
+		margin:20px auto 0;
+		position: relative;
+		border: 2px solid red;
+	}
+	#con{
+		width: 386px;
+		height: 292px;
+		overflow: hidden;/* 超出隐藏 */
+		overflow-x: scroll;
+	}
+	#box{
+		width: 5000px;
+		background: #ccc;
+		overflow: hidden;/* 清除浮动 */
+	}
+	#box img{
+		width: 386px;
+		height: 272px;
+		float: left;
+	}
+	#num{
+		position: absolute;
+		left: 115px;
+		bottom: 30px;
+	}
+	#num li{
+		float: left;
+		width: 22px;
+		height: 22px;
+		line-height: 22px;
+		text-align: center;
+		background: #ccc;
+		font-size: 16px;
+		margin:0 4px;
+		cursor: pointer;
+		list-style: none;
+		border-radius:10px;
+	}
+	#left{
+		width: 25px;
+		height: 24px;
+		background: rgba(0,0,0,.2);
+		position: absolute;
+		left: 0;
+		top: 125px;
+		cursor: pointer;
+		line-height: 24px;
+		text-align: center;
+	}
+	#right{
+		width: 25px;
+		height: 24px;
+		background: rgba(0,0,0,.2);
+		position: absolute;
+		right: 0;
+		top: 125px;
+		line-height: 24px;
+		text-align: center;
+		cursor: pointer;
+	}
+	/* 当前显示样式 */
+	#num .show{
+		background: hotpink;
+		color: #fff;
+	}
+</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="con">
+			<div id="box">
+				<!-- <img src="images/05.jpg" alt=""> -->
+				<img src="../../img/images/001.jpg" alt="">
+				<img src="../../img/images/002.jpg" alt="">
+				<img src="../../img/images/003.jpg" alt="">
+				<img src="../../img/images/004.jpg" alt="">
+				<img src="../../img/images/005.jpg" alt="">
+				<img src="../../img/images/006.jpg" alt="">
+				<!-- <img src="images/01.jpg" alt=""> -->
+			</div>
+			<ul id="num">
+				<li class="show">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			<p id="left"><</p>
+			<p id="right">></p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../全部内容/html/tween.js"></script>
+<script>
+var con=document.getElementById('con');
+var box=document.getElementById('box');
+var num=document.getElementById('num');
+var left=document.getElementById('left');
+var right=document.getElementById('right');
+var imgs=box.children;
+var lis=num.children;
+var a=0,//数字的索引值
+		b=1,//图片的索引值
+		time1=null,
+		time2=null;
+
+/*var firstImg=document.createElement('img');
+// var firSrc=imgs[0].src;
+// firstImg.src=firSrc;
+var firSrc=imgs[0].getAttribute('src');
+firstImg.setAttribute('src',firSrc);
+
+var lastImg=document.createElement('img');
+var lasSrc=imgs[imgs.length-1].getAttribute('src');
+lastImg.setAttribute('src',lasSrc);*/
+
+var firstImg=imgs[0].cloneNode(true);//创建第一张照片
+var lastImg=imgs[imgs.length-1].cloneNode(true);//创建最后一张照片
+
+box.appendChild(firstImg);
+box.insertBefore(lastImg,imgs[0]);
+
+con.scrollLeft=imgs[0].clientWidth;//滚动条初始位置
+
+// 1.自动走
+function autoMove(){
+	clearInterval(time1);
+	time1=setInterval(function (){//每隔2.4秒换一张图
+		a++;
+		if (a>=lis.length) {//临界值判断
+			a=0;
+		};
+		b++;
+		if (b>=imgs.length) {
+			b=2;
+			con.scrollLeft=imgs[0].clientWidth;
+		};
+		Move();
+	},2400);
+}
+autoMove();//进入页面自动执行
+
+// 2.点击右按钮
+right.onclick=function (){
+	clearInterval(time1);
+	clearInterval(time2);
+	a++;
+	if (a>=lis.length) {//临界值判断
+		a=0;
+	};
+	b++;
+	if (b>=imgs.length) {
+		b=2;
+		con.scrollLeft=imgs[0].clientWidth;
+	};
+	Move();
+	autoMove();//控制结束之后2.4秒重新自动走
+}
+
+// 3.点击左按钮
+left.onclick=function (){
+	clearInterval(time1);
+	clearInterval(time2);
+	a--;
+	if (a<0) {//临界值判断
+		a=lis.length-1;
+	};
+	b--;
+	if (b<0) {
+		b=imgs.length-3;
+		con.scrollLeft=imgs[0].clientWidth*(b+1);
+	};
+	Move();
+	autoMove();//控制结束之后2.4秒重新自动走
+}
+
+// 4.点击数字
+for (var i = 0; i < lis.length; i++) {
+	lis[i].onclick=function (){
+		clearInterval(time1);
+		clearInterval(time2);
+		for (var i = 0; i < lis.length; i++) {
+			if (lis[i]==this) {
+				a=i;
+				b=i+1;
+				Move();
+				autoMove();//控制结束之后2.4秒重新自动走
+			};
+		};
+	}
+};
+
+// 5.封装公用代码
+function Move(){//运动函数
+	var start=con.scrollLeft;//运动起点
+	var end=imgs[0].clientWidth*b;//运动终点
+	var change=end-start;//变化量
+	var stepmin=0;//起始步数
+	var stepmax=20;//最大步数
+	var everystep=change/stepmax;//每步所走的距离
+	time2=setInterval(function (){//运动过程
+		stepmin++;//步数递增
+		if (stepmin>=stepmax) {//临界值判断
+			clearInterval(time2);
+		};
+		 start+=everystep;//起始位置变化
+		 con.scrollLeft=start;//滚动条变化
+//		con.scrollLeft=Tween.Back.easeIn(stepmin,start,change,stepmax);
+	},20);
+	for (var i = 0; i < lis.length; i++) {
+		lis[i].className='';//清空所有数字的样式
+	};
+	lis[a].className='show';//当前显示样式
+}
+</script>
+</html>

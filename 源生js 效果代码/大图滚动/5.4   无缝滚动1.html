@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .outter{
+            width: 1000px;
+            height: 310px;
+            overflow: hidden;
+            margin: 100px auto;
+        }
+        .inner{
+            width: 2000px;
+            height: 310px;
+        }
+        .inner img{
+            width: 200px;
+            height: 310px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="outter" id="outter">
+    <div class="inner" id="inner">
+        <img src="img/gun1.png" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue3.jpeg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue2.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue1.jpg" alt="图片名" title="鼠标悬浮"/>
+        <img src="img/wuyue4.jpg" alt="图片名" title="鼠标悬浮"/>
+    </div>
+</div>
+<script>
+    var outter = document.getElementById('outter');
+    var inner = document.getElementById('inner');
+    inner.innerHTML += inner.innerHTML;
+    function autoScroll(){
+        outter.scrollLeft +=1;
+        if(outter.scrollLeft == inner.clientWidth/2){
+            outter.scrollLeft = 0;
+        }
+    }
+    function zou(){
+    setInterval(autoScroll,1);
+    }
+    setTimeout(zou,2000);
+</script>
+</body>
+</html>

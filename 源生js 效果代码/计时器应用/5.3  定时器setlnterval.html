@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function test(){
+        document.write('<p>你好</p>');
+    }
+    var  timer = setInterval(test,1000);
+    function stopTimer(){
+        clearInterval(timer);
+    }
+    setTimeout(stopTimer,5000);
+    //setTimeout后面的语句是否会等待上面的执行
+    //
+    document.write('timeout  后面的语句')
+</script>
+</body>
+</html>

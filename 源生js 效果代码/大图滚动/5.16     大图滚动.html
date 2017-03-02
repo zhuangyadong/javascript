@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        #box{
+            width: 800px;
+            height: 500px;
+            border: 1px solid;
+            margin: 50px auto;
+            position: relative;
+        }
+        #con img{
+            width: 800px;
+            height: 500px;
+            position: absolute;
+            display: block;
+            opacity: 0;
+        }
+        #con .show{
+            display: block;
+            opacity: 1;
+        }
+        #num{
+            overflow: hidden;
+            width: 250px;
+            height: 20px;
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+        }
+        #num li{
+            list-style-type: none;
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 40px;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 20px;
+            background-color: green;
+        }
+        #num .color{
+            background:#ccc;
+        }
+        #left{
+            width: 25px;
+            height: 24px;
+            background: #ccc;
+            position: absolute;
+            top: 250px;
+            left: 0;
+        }
+        #right{
+            width: 25px;
+            height: 24px;
+            background: #ccc;
+            position: absolute;
+            top: 250px;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="con">
+            <img class="show" src="img/wuyue1.jpg" alt=""/>
+            <img src="img/wuyue2.jpg" alt=""/>
+            <img src="img/wuyue3.jpeg" alt=""/>
+            <img src="img/wuyue4.jpg" alt=""/>
+            <img src="img/gun1.png" alt=""/>
+        </div>
+        <ul id="num">
+            <li class="color">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <p id="left">&lt;</p>
+        <p id="right">&gt;</p>
+    </div>
+</body>
+<script>
+    var con=document.getElementById('con');
+    var imgs=document.getElementsByTagName('img');
+    var num=document.getElementById('num');
+    var lis=document.getElementsByTagName('li');
+    var left=document.getElementById('left');
+    var right=document.getElementById('right');
+    var time1=null,time2=null;
+    var a=0;//保存下标
+    function hao(){
+        a++;
+        if(a>=imgs.length){
+            a=0;
+        }
+        for(var i=0;i<lis.length;i++){
+            lis[i].style.background='green';
+//            imgs[i].style.opacity=0;
+            imgs[i].style.display='none';
+        }
+        lis[a].style.background='#ccc';
+        imgs[a].style.display='block';
+        var opa=0;
+        clearInterval(time1);
+        time1=setInterval(function(){
+            opa+=0.01;
+            if(opa>=1){
+                opa=1;
+                clearInterval(time1);
+            }
+            imgs[a].style.opacity=opa;
+        },20)
+    }
+    clearInterval(time2);
+    time2=setInterval(hao,3000);
+    right.onclick=function(){
+        clearInterval(time2);
+        a++;
+        if(a>=imgs.length){
+            a=0;
+        }
+        shou();
+    }
+    function shou(){
+        for(var i=0;i<lis.length;i++){
+            lis[i].style.background='green';
+//            imgs[i].style.opacity=0;
+            imgs[i].style.display='none';
+        }
+        lis[a].style.background='#ccc';
+        imgs[a].style.display='block';
+        var opa=0;
+        clearInterval(time1);
+        time1=setInterval(function(){
+            opa+=0.01;
+            if(opa>=1){
+                opa=1;
+                clearInterval(time1);
+            }
+            imgs[a].style.opacity=opa;
+        },20)
+    }
+    for(var i=0;i<lis.length;i++){
+
+//        lis[i].index
+        lis[i].onmouseover=function(){
+            clearInterval(time2);
+            for(var j= 0;j<lis.length;j++){
+                if(lis[j]==this){
+                    a=j;
+                    console.log(a);
+                }
+            }
+            for(var i=0;i<lis.length;i++){
+                lis[i].style.background='green';
+//            imgs[i].style.opacity=0;
+                imgs[i].style.display='none';
+            }
+            lis[a].style.background='#ccc';
+            imgs[a].style.display='block';
+            var opa=0;
+            clearInterval(time1);
+            time1=setInterval(function(){
+                opa+=0.01;
+                if(opa>=1){
+                    opa=1;
+                    clearInterval(time1);
+                }
+                imgs[a].style.opacity=opa;
+//                console.log(a);
+            },20)
+            time2=setInterval(hao,3000);
+        }
+
+    }
+</script>
+</html>

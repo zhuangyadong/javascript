@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        span,input,button{
+            margin: 0;
+            padding: 0;
+        }
+        .input1{
+            width: 100px;
+            /*height: 50px;*/
+            padding: 5px;
+        }
+        button{
+          height: 29px;
+            background-color: #0040D0;
+            color: #ffffff;
+            border: none;
+            margin-left: -8px;
+            /*font-size: 8px;*/
+        }
+        .input2{
+            width: 193px;
+            padding: 6px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<span>中国（+86）</span><br/>
+<input  id="inp" class="input1" type="text" placeholder="请输入手机号码"/>
+<button id="but">点击发送验证码</button>
+<br/>
+<input class="input2" type='text' placeholder="请输入验证码" />
+<script>
+    var anniu = document.getElementById('but');
+    var ipu = document.getElementById('inp');
+    var timer = null;//定时器   每隔一秒会修改文字
+    var count = 60; //计时器
+    anniu.onclick = function(){
+            if(!ipu.value){//输入为空
+                alert('输入不能为空');
+                return;
+            }
+        this.disabled = true;
+        this.style.color = '#ffffff';
+        timer = setInterval(autoCount,1000);
+    };
+    function autoCount(){
+        if(count == 0){
+            clearInterval(timer);
+            count = 60;
+            anniu.innerHTML = '发送验证码';
+            anniu.style.color = '';
+            anniu.disabled = false;
+        }
+        else{
+            anniu.innerHTML = count+'s后重发';
+            count--;
+        }
+    }
+</script>
+</body>
+</html>
