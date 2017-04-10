@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>标题</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<style>
+		*{margin:0;padding:0;list-style:none;}
+		.div1{
+			width: 300px;
+			height: 200px;
+			margin: 50px auto 0;
+			border: 1px solid #ccc;
+			position: relative;
+		}
+		.div1:hover #l{
+			display: block;
+		}
+		.div1:hover #r{
+			display: block;
+		}
+		#box{
+			width: 300px;
+			height: 200px;
+			overflow: hidden;
+		}
+		#con{
+			width: 3000px;
+			height: 200px;
+		}
+		#con img{
+			width: 300px;
+			height: 200px;
+			float: left;
+		}
+		#ul1{
+			position: absolute;
+			bottom: 30px;
+			right: 30px;
+		}
+		#ul1 li{
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			float: left;
+			background: #ddd;
+			margin-left: 5px;
+		}
+		#ul1 .show{
+			background: red;
+		}
+		#l{
+			width: 30px;
+			height: 50px;
+			background: rgba(0,0,0,.2);
+			position: absolute;
+			left: 0;
+			top: 75px;
+			text-align: center;
+			line-height: 50px;
+			font-size: 16px;
+			color: #fff;
+			cursor: pointer;
+			display: none;
+		}
+		#r{
+			width: 30px;
+			height: 50px;
+			background: rgba(0,0,0,.2);
+			position: absolute;
+			right: 0;
+			top: 75px;
+			text-align: center;
+			line-height: 50px;
+			font-size: 16px;
+			color: #fff;
+			cursor: pointer;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="div1">
+		<div id="box">
+			<div id="con">
+				<img src="" alt="">
+				<img src="" alt="">
+				<img src="" alt="">
+				<img src="" alt="">
+				<img src="" alt="">
+			</div>
+			<ul id="ul1">
+				<li class="show"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<p id="l" onselectstart="return false"><</p>
+			<p id="r" onselectstart="return false">></p>
+		</div>
+	</div>
+	<script src="jquery.min.js" type="text/javascript"></script>
+	<script>
+		$(function(){
+			var imgW = $('#con img').width();
+			var a = 1;//图片的下标
+			var b = 0;//li的下标
+			var time = null;//创建一个计时器
+			var one = $('#con img:first').clone();//新建第一张图片
+			var lst = $('#con img:last').clone();//新建最后一张图片
+			$('#con').append(one);//在开头插入新建的第一张图片
+			$('#con').prepend(lst);//在末尾插入新建的最后一张图片
+
+			console.log($('#con img').length);
+			$('#box').scrollLeft($('#con img').width());//滚动的初始位置
+			//1.自动走
+			function move(){
+				time = setInterval(function(){
+					a++;
+					if(a>=$('#con img').length){
+						a = 2;
+						$('#box').scrollLeft(imgW);
+					}
+					b++;
+					if(b>=$('#ul1 li').length){
+						b=0;
+					}
+					$('#box').stop().animate({scrollLeft:imgW*a});
+					$('#ul1 li').eq(b).addClass('show').siblings().removeClass('show');
+				},2000)
+				
+			}
+			move();
+			//2.点击左按钮
+			$('#l').click(function(){
+				clearInterval(time);
+				a--;
+				if(a<0){
+					a=$('#con img').length-3;
+					$('#box').scrollLeft(imgW*(a+1));
+				}
+				b--;
+				if(b<0){
+					b=$('#ul1 li').length-1;
+				}
+				$('#box').stop().animate({scrollLeft:imgW*a});
+				$('#ul1 li').eq(b).addClass('show').siblings().removeClass('show');
+				move();
+			})
+			//3.点击右按钮
+			$('#r').click(function(){
+				clearInterval(time);
+				a++;
+				if(a>=$('#con img').length){
+					a=2;
+					$('#box').scrollLeft(imgW);
+				}
+				b++;
+				if(b>=$('#ul1 li').length){
+					b=0;
+				}
+				$('#box').stop().animate({scrollLeft:imgW*a});
+				$('#ul1 li').eq(b).addClass('show').siblings().removeClass('show');
+				move();
+			})
+			$('#ul1 li').mouseover(function(){
+				clearInterval(time);
+				b=$('#ul1 li').index(this);
+				a=b+1;
+				$('#ul1 li').eq(b).addClass('show').siblings().removeClass('show');
+				$('#box').stop().animate({scrollLeft:imgW*a});
+			})
+
+		})
+	</script>
+</body>
+</html>
