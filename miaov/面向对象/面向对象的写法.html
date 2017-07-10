@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+		#div1 div{
+			display: none;
+			width: 200px;
+			height: 200px;
+			border: 1px solid #ccc;
+
+		}
+		.active{
+			background: #ccc;
+			color: #fff;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var box = document.getElementById('div1');
+			var inp = box.getElementsByTagName('input');
+			var aDiv = box.getElementsByTagName('div');
+			for(var i = 0;i<inp.length;i++){
+				inp[i].index = i;
+				inp[i].onclick = function(){
+					for (var i = 0; i < inp.length; i++) {
+						inp[i].className = '';
+						aDiv[i].style.display = 'none';
+					}
+					this.className = 'active';
+					aDiv[this.index].style.display = 'block';
+				}
+			}
+		}
+	// 先变形
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<input class="active" type="button" value="1">
+		<input type="button" value="2">
+		<input type="button" value="3">
+		<div style="display: block">111</div>
+		<div>222</div>
+		<div>333</div>
+	</div>
+</body>
+</html>
