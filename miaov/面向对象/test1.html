@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #div1{
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      background: #ccc;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+  <script type="text/javascript">
+
+  //基本写法
+  /*
+    window.onload = function () {
+      var box = document.getElementById('div1');
+      var x = 0;
+      var y = 0;
+
+      document.onmousedown = function (ev) {
+        var ev = ev || window.event;
+        x = ev.clientX - box.offsetLeft;
+        y = ev.clientY - box.offsetTop;
+
+        document.onmousemove = function (ev) {
+          var ev = ev || window.event;
+          box.style.left = ev.clientX - x +'px';
+          box.style.top = ev.clientY - y +'px';
+        }
+        document.onmouseup = function(){
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+        return false;
+      }
+    }*/
+    /*
+    ------------------------------------------------------变型
+    var box = null;
+    var x = 0;
+    var x = 0;
+    window.onload = function(){
+      box = document.getElementById('div1');
+      init();
+    };
+    function init() {
+      box.onmousedown = fnDown;
+    }
+    function fnDown(ev) {
+      var ev = ev || window.event;
+      x = ev.clientX - box.offsetLeft;
+      y = ev.clientY - box.offsetTop;
+      document.onmousemove = fnMove;
+      document.onmouseup = fnUp;
+
+      return false;
+
+    }
+
+    function fnMove(ev) {
+      var ev = ev || window.event;
+      box.style.left = ev.clientX - x + 'px';
+      box.style.top = ev.clientY - y + 'px';
+    }
+    function fnUp() {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+    */
+    //-------------------------------------------------------面向对象
+
+    var box = null;
+    var x = 0;
+    var y = 0;
+    window.onload = function () {
+      var p1 = new dong('div1');
+      p1.init();
+    }
+
+    function dong(id) {
+      this.box = document.getElementById(id);
+      this.x = 0;
+      this.y = 0;
+    };
+    dong.prototype.init = function(){
+      var This = this;
+      this.box.onmousedown = function(ev){
+        var ev = ev || window.event;
+        This.fnDown(ev);
+        return false;
+      };
+    };
+
+    dong.prototype.fnDown = function (ev) {
+      var This = this;
+      this.x = ev.clientX - this.box.offsetLeft;
+      this.y = ev.clientY - this.box.offsetTop;
+      document.onmousemove = function(ev){
+        var ev = ev || window.event;
+        This.fnMove(ev);
+      };
+      document.onmouseup = function(){
+        This.fnUp();
+      };
+    }
+    dong.prototype.fnMove = function (ev) {
+      this.box.style.left = ev.clientX - this.x + 'px';
+      this.box.style.top = ev.clientY - this.y + 'px';
+    }
+
+    dong.prototype.fnUp = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+  </script>
+</head>
+<body>
+  <div id="div1"></div>
+</body>
+</html>

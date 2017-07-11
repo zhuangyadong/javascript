@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			width: 100%;
+			position: absolute;
+			bottom: 0;
+			text-align: center;
+		}
+		img{
+			cursor: pointer;
+			width: 64px;
+		}
+	</style>
+</head>
+<body>
+	<input type="text">
+	<input type="text">
+	<input type="text">
+	<input type="text">
+	<input type="text">
+	<div id="box">
+		<img src="img/a.png" alt="">
+		<img src="img/b.png" alt="">
+		<img src="img/c.png" alt="">
+		<img src="img/b.png" alt="">
+		<img src="img/d.png" alt="">
+	</div>
+	<script>
+		function show() {
+			var aInput = document.getElementsByTagName('input');
+			var oDiv = document.getElementById('box');
+			var aImg = document.getElementsByTagName('img');
+
+			/*document.onmousemove = function(ev){
+
+				var ev = ev || window.event;
+
+				for(var i = 0; i<aImg.length;i++){
+				var x = aImg[i].offsetLeft + aImg[i].offsetWidth/2;
+				var y = aImg[i].offsetTop + aImg[i].offsetHeight/2 + oDiv.offsetTop;
+
+				var b = ev.clientX - x;
+				var a = ev.clientY - y;
+
+				var c= Math.sqrt(Math.pow(b,2) + Math.pow(a,2));
+
+				var scale = 1 - c/300;
+
+				if(scale<0.5){
+					scale = 0.5;
+				}
+				aInput[i].value = scale;
+				aImg[i].style.width = scale * 128 + 'px';
+				aImg[i].style.height = scale * 128+ 'px';
+			}
+			}*/
+
+			document.onmousemove = function(ev){
+				var ev = ev || window.event;
+
+				for(var i = 0; i<aImg.length;i++){
+
+					var x = aImg[i].offsetLeft + aImg[i].offsetWidth/2;
+
+					var y = aImg[i].offsetTop + aImg[i].offsetHeight/2 + oDiv.offsetTop;
+
+					var a = ev.clientY - y;
+					var b = ev.clientX - x;
+					var c = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+
+					var scale = 1 - c/300;
+
+					if(scale<0.5){
+						scale = 0.5;
+					}
+					aInput[i].value = scale;
+
+					aImg[i].style.width = scale * 128+'px';
+					aImg[i].style.height = scale * 128+'px';
+
+
+				}
+
+			}
+
+			
+		}
+		show();
+	</script>
+</body>
+</html>

@@ -34,36 +34,45 @@
 				}
 			}
 		}*/
-	// 先变型：
-	//尽量不要函数嵌套函数
-	//可以有全局变量
-	//把onload中不是赋值的语句放到单独的函数中
+		//改写面向对象
+		//全局变量就是属性
+		//函数就是方法
+		//onload中创建对象
 
-		var box = null;
-		var inp = null;
-		var aDiv = null;
+		//改this指向问题：事件或者是定时器，尽量让面向对象中的this指向对象
+
 		window.onload = function(){
-			box = document.getElementById('div1');
-			inp = box.getElementsByTagName('input');
-			aDiv = box.getElementsByTagName('div');
-			
-			init();
+
+			var t1 = new Tab();
+
+			t1.init();
 		};
 
-		function init(){
-			for(var i = 0;i<inp.length;i++){
-				inp[i].index = i;
-				inp[i].onclick = change;
-			}
+		function Tab(){
+			this.box = document.getElementById('div1');
+			this.inp = this.box.getElementsByTagName('input');
+			this.aDiv = this.box.getElementsByTagName('div');
 		}
-		function change(){
-				for (var i = 0; i < inp.length; i++) {
-					inp[i].className = '';
-					aDiv[i].style.display = 'none';
-				}
-				this.className = 'active';
-				aDiv[this.index].style.display = 'block';
+
+		Tab.prototype.init = function(){
+			var This = this;
+			for(var i = 0;i<this.inp.length;i++){
+				this.inp[i].index = i;
+				this.inp[i].onclick = function(){
+					This.change(this);
+				};
 			}
+		};
+
+		Tab.prototype.change = function(obj){
+			for (var i = 0; i < this.inp.length; i++) {
+					this.inp[i].className = '';
+					this.aDiv[i].style.display = 'none';
+					}
+					obj.className = 'active';
+					this.aDiv[obj.index].style.display = 'block';
+		}
+
 	</script>
 </head>
 <body>
