@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script>
+      var arr = [1,2,3];
+      Array.prototype.push = function () {
+        for (var i = 0; i < arguments.length; i++) {
+          this[this.length]=arguments[i];
+        }
+      return this.length;
+      };
+      arr.push(7,8,9);
+      alert(arr);
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
