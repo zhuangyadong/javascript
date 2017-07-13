@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	//原型链：实例对象与原型之间的连接叫做原型链
+
+	//
+	function Arr() {
+		// this.num = 20;
+	};
+	// Arr.prototype.num = 10;
+	Object.prototype.num = 30;
+	var a1 = new Arr();
+
+	alert(a1.num);
+</script>
+</body>
+</html>

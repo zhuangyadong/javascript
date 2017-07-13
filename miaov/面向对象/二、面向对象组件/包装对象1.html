@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var a = 'name';
+	// alert(typeof a);
+
+	var b = new String('name');
+	// alert(typeof b);
+
+	//包装对象：基本类型都有自己对应的包装对象：String Number Boolean
+
+	var c = 'hello';
+	String.prototype.lastaName = function() {
+		return this[this.length-1];
+	};
+
+	// alert(c.lastaName());
+
+	var str = 'hello';
+
+	str.number = 10;
+	alert(str.number = 20);
+
+</script>
+</body>
+</html>
