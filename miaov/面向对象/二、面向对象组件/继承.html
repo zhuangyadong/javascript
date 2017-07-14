@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    //继承：子类不影响父类，子类可以继承父类的一些功能（代码复用）
+    //属性的继承：调用父类的构造函数   利用call  更改this指针
+    //方法的继承:for in :拷贝继承 (jquery也是采用的拷贝继承)
+    function CreatePerson(name,sex) {//父类
+      this.name = name;
+      this.age = sex;
+    }
+    CreatePerson.prototype.showName = function () {
+      alert(this.name);
+    };
+    var p1 = new CreatePerson('小明','男');
+    // p1.showName();
+
+    function CreateStar(name,sex,job) {//子类
+      CreatePerson.call(this,name,sex);
+      this.job = job;
+    }
+
+  //  CreateStar.prototype = CreatePerson.prototype;
+  extend(CreateStar.prototype,CreatePerson.prototype)
+  CreateStar.prototype.showJob = function () {
+
+  }
+    var p2 = new CreateStar('黄晓明','男','演员');
+    p2.showName();
+
+
+    function extend(obj1,obj2) {
+      for(var attr in obj2){
+        obj1[attr] = obj2[attr];
+      }
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>

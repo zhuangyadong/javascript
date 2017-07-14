@@ -6,10 +6,10 @@
 <body>
 <script type="text/javascript">
 	var a = 'name';
-	// alert(typeof a);
+	// alert(typeof a);//String类型
 
 	var b = new String('name');
-	// alert(typeof b);
+	// alert(typeof b);//Object类型
 
 	//包装对象：基本类型都有自己对应的包装对象：String Number Boolean
 
@@ -23,8 +23,10 @@
 	var str = 'hello';
 
 	str.number = 10;
-	alert(str.number = 20);
-
+	// alert(str.number = 20);
+	var d = 12345;//number
+	var e = new Number(123456)
+	alert(typeof e);//Object
 </script>
 </body>
 </html>

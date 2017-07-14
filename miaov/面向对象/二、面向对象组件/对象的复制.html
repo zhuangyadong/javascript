@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    var a = {
+      name : '小明'
+    };
+    var b = {};
+
+    extend(b,a);
+    // var b = a;
+    // for(var attr in a){
+    //   b[attr] = a[attr];
+    // }
+    b.name = '小强';
+
+    alert(a.name);
+
+    function extend(obj1,obj2) {
+      for(var attr in obj2){
+        b[attr] = a[attr];
+      }
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>
