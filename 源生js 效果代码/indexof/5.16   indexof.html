@@ -2,25 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    
     <title>识别浏览器型号</title>
 </head>
 <body>
 <script>
-    
-    
     var abc='1234560';
     alert(abc.indexOf('7'));//返回-1  说明没有；
     var str = window.navigator.userAgent.toLowerCase();
 //    alert(str);
     if(str.indexOf('chrome')>-1){
         alert('这是哥想要的');
-        
-        
     }else if(str.indexOf('trident')>-1){
         alert('yes');
     }
 </script>
-
 </body>
 </html>
